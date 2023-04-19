@@ -134,7 +134,7 @@ function Qnapage() {
           className={activeIndex === 6 ? "is-active" : ""}
           onClick={() => tabClickHandler(6)}
         >
-          <p>답변 완료 목록</p>
+          <p>답변 완료◦수정</p>
         </li>
       ),
       tabCont: (

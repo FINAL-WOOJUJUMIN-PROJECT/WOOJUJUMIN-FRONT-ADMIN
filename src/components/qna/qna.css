@@ -66,3 +66,6 @@ p {
 .tab-content {
   margin-top: 1rem;
 }
+textarea {
+  resize: none;
+}

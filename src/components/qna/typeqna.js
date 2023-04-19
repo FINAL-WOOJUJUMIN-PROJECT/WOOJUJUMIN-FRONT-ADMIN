@@ -1,8 +1,9 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import SimpleBarReact from "simplebar-react";
 import Table from "react-bootstrap/Table";
 import Qnamodal from "./qnamodal";
 function Typeqna(props) {
@@ -16,7 +17,9 @@ function Typeqna(props) {
 
   let qtype = props.qtype;
 
-  // paging
+  //
+  const simpleBarRef = useRef(null);
+  //
 
   useEffect(() => {
     if (isLogin == null) {
@@ -51,41 +54,43 @@ function Typeqna(props) {
     }
   }, [id, qtype]);
   return (
-    <div>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>제목</th>
-            <th>작성날짜</th>
-            <th>답변</th>
-          </tr>
-        </thead>
-        <tbody>
-          {qnalist && qnalist.length ? (
-            qnalist.map(function (qna, i) {
-              return (
-                <tr key={i}>
-                  <td align="left">
-                    {qna.ansdate ? (
-                      <span>[답변완료] </span>
-                    ) : (
-                      <span>[답변대기중] </span>
-                    )}
-                    {qna.title}
-                  </td>
-                  <td>{qna.wdate.substring(0, 10)}</td>
-                  <td>
-                    <Qnamodal qnaSeq={qna.qnaSeq} />
-                  </td>
-                </tr>
-              );
-            })
-          ) : (
-            <td colSpan={2}>작성된 문의글이 없습니다</td>
-          )}
-        </tbody>
-      </Table>
-    </div>
+    <SimpleBarReact>
+      <div ref={simpleBarRef} style={{ maxHeight: 500 }}>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>제목</th>
+              <th>작성날짜</th>
+              <th>답변</th>
+            </tr>
+          </thead>
+          <tbody>
+            {qnalist && qnalist.length ? (
+              qnalist.map(function (qna, i) {
+                return (
+                  <tr key={i}>
+                    <td align="left">
+                      {qna.ansdate ? (
+                        <span>[답변완료] </span>
+                      ) : (
+                        <span>[답변대기중] </span>
+                      )}
+                      {qna.title}
+                    </td>
+                    <td>{qna.wdate.substring(0, 10)}</td>
+                    <td>
+                      <Qnamodal qnaSeq={qna.qnaSeq} />
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <td colSpan={2}>작성된 문의글이 없습니다</td>
+            )}
+          </tbody>
+        </Table>
+      </div>
+    </SimpleBarReact>
   );
 }
 export default Typeqna;

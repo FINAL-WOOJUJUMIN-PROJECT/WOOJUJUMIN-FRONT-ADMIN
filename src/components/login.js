@@ -36,7 +36,8 @@ function Login() {
           alert(resp.data.nickname + "님 환영합니다");
 
           localStorage.setItem("login", JSON.stringify(resp.data));
-          history("/main");
+
+          document.location.href = "/main";
         } else {
           alert("id나 password를 확인하십시오");
         }
